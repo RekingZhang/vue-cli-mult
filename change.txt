@@ -1,0 +1,9 @@
+1.构建优化
+- 开启babel-loader的cache
+- 使用DllPlugin和DllReferencePlugin预编译
+- 换用happypack多进程构建
+
+2.移除manifest.js
+ 因为vue + vuex + vue-loader + axios 主要库文件拆分到了lib库，采用的全站缓存，单个模块构建的vendor.js已经非常小，无需在拆分manifest.js浪费HTTP请求(基于HTTP1.1协议)
+
+3.基于模块构建
