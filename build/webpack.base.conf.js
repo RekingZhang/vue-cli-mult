@@ -2,6 +2,7 @@ var path = require('path')
 var webpack = require('webpack')
 var utils = require('./utils')
 var config = require('../config')
+var vueLoaderConfig = require('./vue-loader.conf')
 var os = require('os')
 var HappyPack = require('happypack')
 var happThreadPool = HappyPack.ThreadPool({
@@ -41,18 +42,24 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-        options: {
-          loaders: {
-            js: 'happypack/loader?id=js'
-          }
-        }
+        options: vueLoaderConfig
       },
       {
         test: /\.js$/,
-        loader: ['happypack/loader?id=js'],
-        include: [resolve('src'), resolve('test')],
-        exclude: [path.resolve('../../node_modules')]
+        loader: 'babel-loader',
+        include: [resolve('src'), resolve('test')]
       },
+      //   {
+      //     test: /\.vue$/,
+      //     loader: ['happypack/loader?id=vue']
+      //   },
+
+      //   {
+      //     test: /\.js$/,
+      //     loader: ['happypack/loader?id=js'],
+      //     include: [resolve('src'), resolve('test')],
+      //     exclude: [path.resolve('../../node_modules')]
+      //   },
 
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -73,15 +80,21 @@ module.exports = {
     ]
   },
   plugins: [
-    new HappyPack({
-      id: 'js',
-      cache: true,
-      loaders: ['babel-loader?cacheDirectory=true'],
-      threadPool: happThreadPool
-    }),
-    new webpack.DllReferencePlugin({
-      context: __dirname,
-      manifest: require('../lib/vendor-mainfest.json') // 指向这个json
-    })
+    // new HappyPack({
+    //   id: 'vue',
+    //   cache: true,
+    //   loaders: ['vue-loader?cacheDirectory=true'],
+    //   threadPool: happThreadPool
+    // }),
+    // new webpack.DllReferencePlugin({
+    //   context: __dirname,
+    //   manifest: require('../lib/vendor-mainfest.json') // 指向这个json
+    // }),
+    // new HappyPack({
+    //   id: 'js',
+    //   cache: true,
+    //   loaders: ['babel-loader?cacheDirectory=true'],
+    //   threadPool: happThreadPool
+    // })
   ]
 }
