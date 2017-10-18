@@ -45,21 +45,15 @@ module.exports = {
         options: vueLoaderConfig
       },
       {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        test: /\.scss$/,
+        loaders: ["style", "css", "sass"]
       },
-      //   {
-      //     test: /\.vue$/,
-      //     loader: ['happypack/loader?id=vue']
-      //   },
-
-      //   {
-      //     test: /\.js$/,
-      //     loader: ['happypack/loader?id=js'],
-      //     include: [resolve('src'), resolve('test')],
-      //     exclude: [path.resolve('../../node_modules')]
-      //   },
+      {
+        test: /\.js$/,
+        loader: ['happypack/loader?id=js'],
+        include: [resolve('src'), resolve('test')],
+        exclude: [path.resolve('../../node_modules')]
+      },
 
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -80,21 +74,11 @@ module.exports = {
     ]
   },
   plugins: [
-    // new HappyPack({
-    //   id: 'vue',
-    //   cache: true,
-    //   loaders: ['vue-loader?cacheDirectory=true'],
-    //   threadPool: happThreadPool
-    // }),
-    // new webpack.DllReferencePlugin({
-    //   context: __dirname,
-    //   manifest: require('../lib/vendor-mainfest.json') // 指向这个json
-    // }),
-    // new HappyPack({
-    //   id: 'js',
-    //   cache: true,
-    //   loaders: ['babel-loader?cacheDirectory=true'],
-    //   threadPool: happThreadPool
-    // })
+    new HappyPack({
+      id: 'js',
+      cache: true,
+      loaders: ['babel-loader?cacheDirectory=true'],
+      threadPool: happThreadPool
+    })
   ]
 }
