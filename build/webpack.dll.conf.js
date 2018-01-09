@@ -16,10 +16,11 @@ module.exports = {
       name: '[name]_library',
       context: __dirname // 执行的上下文环境，对之后DllReferencePlugin有用
     }),
-    new webpack.optimize.UglifyJsPlugin({ // uglifjs压缩
+    new webpack.optimize.UglifyJsPlugin({
+      // uglifjs压缩
       compress: {
         warnings: false
       }
     })
   ]
-}
+};
